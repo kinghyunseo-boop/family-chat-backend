@@ -44,9 +44,19 @@ app.get('/api/health', (req, res) => {
 
 // ── Serve frontend in production ──────────────────────────────
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../../frontend/build')));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../frontend/build/index.html'));
+  // app.use(express.static(path.join(__dirname, '../../frontend/build')));
+  // app.get('*', (req, res) => {
+  //   res.sendFile(path.join(__dirname, '../../frontend/build/index.html'));
+  // });
+
+  // ⚠️ req, res 스펠링과 괄호 위치를 정확하게 확인해 주세요!
+  app.get('/', (req, res) => {
+    try {
+      res.send('우리가족톡 백엔드 서버가 정상 구동 중입니다! 🎉');
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('서버 내부 오류');
+    }
   });
 }
 
